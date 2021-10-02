@@ -13,7 +13,7 @@ class Testgithubrepo(unittest.TestCase):
 
     def test_gather_repos(self):
         self.assertEqual(gather_repos('richkempinski'), ['threads-of-life', 'hellogitworld', 'helloworld', 'csp', 'richkempinski.io', 'Mocks', 'Project1', 'try_nbdev', 'try_nbdev2'])
-        self.assertNotEqual(gather_repos('richkempinski'), ['threads-of-life', 'hellogitworld', 'helloworld', 'csp', 'richkempinski.io', 'Mocks', 'Project1', 'try_nbdev', 'try_nbdev2'])
+        self.assertNotEqual(gather_repos('richkempinski'), ['hellogitworld', 'helloworld', 'csp', 'richkempinski.io', 'Mocks', 'Project1', 'try_nbdev', 'try_nbdev2'])
 
 
     def test_gather_commits(self):
