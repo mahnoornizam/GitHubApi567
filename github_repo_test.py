@@ -1,5 +1,4 @@
-""" The goal of this file is to demonstrate the implementation of the functions
-in the github_aggregator file. """
+
 
 # Modules
 import requests
