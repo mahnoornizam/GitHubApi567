@@ -1,6 +1,6 @@
 import unittest
 from unittest.mock import MagicMock,patch
-from hw04_zhianghu import *
+from githubrepo import *
 class Testget_repositories(unittest.TestCase):
     @patch("githubrepo.get_repositories")
     def testget_repositories(self,Mocktest):
