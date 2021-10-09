@@ -2,7 +2,7 @@ import json
 import unittest
 from unittest.mock import Mock, patch
 
-from HW04_TylerMarchiano import getGitHubRepos, getGitHubRepoCommits
+from gituhbrepo import getGitHubRepos, getGitHubRepoCommits
 
 class TestGitHub(unittest.TestCase):
 
