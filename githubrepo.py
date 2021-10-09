@@ -1,36 +1,45 @@
+import json
 import requests
+import sys
 
-def get_repositories(username):
-    list1 = list()
-    f='https://api.github.com/users/'+{username}+'/repos'
-    re = requests.get(f)
-    json = re.json()
-    for  p  in  range ( 0 , len ( json )):
-        rename = json[p]['name']
-        f='https://api.github.com/repos/'+{username}+'/'+{rename}+'/commits'
-        commit = requests.get(f)
-        c = commit.json()
-        list1.append(f"Repo: {rename} Commits number: {len(c)}")
-    return list1
+def getGitHubRepos(userID):
+    """
+    This function will return a list of repositories that belong to the given userID
+    """
+    repoList = []
+    userRepositories = requests.get('https://api.github.com/users/'+userID+'/repos').json()
+    try:
+        for repo in userRepositories:
+            repoList.append(repo['name'])
+    except:
+        return 'User ID was not found'
+    
+    return repoList
 
-def main():
-    username = input("Enter the username:")
-    print(get_repositories(username))
+def getGitHubRepoCommits(userID, repo):
+    """
+    This function will return the number of commits a certain repo has
+    """
+    userRepoCommits = requests.get('https://api.github.com/repos/'+userID+'/'+repo+'/commits').json()
+    
+    return len(userRepoCommits)
+        
 
-if __name__=='__main__':
+def main() -> None:
+    '''Main function that prompts user for the GitHub User ID'''
+    userID = input('Please enter a GitHub User ID: ')
+    print()
+    
+    repositoryResult = getGitHubRepos(userID)
+    
+    if repositoryResult != 'User ID was not found':
+        for repo in repositoryResult:
+            numCommits = getGitHubRepoCommits(userID, repo)
+            print(f'Repo: {repo} Number of commits: {numCommits}')
+    else:
+        print(repositoryResult)
+        
+if __name__ == "__main__":
+    print()
+    print("Running main()....")
     main()
-    return repo_name, commit_count
-
-def gather_github_info(github_id):
-    """ This function takes as input the username & returns a list of tuples
-    of repo_name & commit_count for that GitHub user. """
-
-    results_list = []
-
-    repos_list = gather_repos(github_id)
-
-    for repo in repos_list:
-        repo_name, commit_count = gather_commits(github_id, repo)
-        results_list.append((repo_name, commit_count))
-
-    return results_list
