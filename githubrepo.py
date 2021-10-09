@@ -1,46 +1,24 @@
-""" This program requests repository and commit information from GitHub using
-the requests & json modules and the public GitHub API. """
-
-# Modules
 import requests
-import json
 
+def get_repositories(username):
+    list1 = list()
+    f='https://api.github.com/users/'+{username}+'/repos'
+    re = requests.get(f)
+    json = re.json()
+    for  p  in  range ( 0 , len ( json )):
+        rename = json[p]['name']
+        f='https://api.github.com/repos/'+{username}+'/'+{rename}+'/commits'
+        commit = requests.get(f)
+        c = commit.json()
+        list1.append(f"Repo: {rename} Commits number: {len(c)}")
+    return list1
 
-def gather_repos(github_id):
-    """ This function takes a username as input and returns a list of
-    repositories found in Github for that user ID. """
+def main():
+    username = input("Enter the username:")
+    print(get_repositories(username))
 
-    repos_list = []
-
-    url = 'https://api.github.com/users/' + github_id + '/repos'
-    response = requests.get(url)
-
-    repos = json.loads(response.text)
-
-    for repo in repos:
-        if repo['name']:
-            repos_list.append(repo['name'])
-        elif repo['full_name']:
-            repos_list.append(repo['full_name'])
-        else:
-            repos_list.append(repo['id'])
-
-    return repos_list
-
-def gather_commits(github_id, repo_name):
-    """ This function takes a username & repo name as input and returns
-    a tuple with the repo and number of commits. """
-
-    url = 'https://api.github.com/repos/' + github_id + '/' + repo_name + '/commits'
-    reponse = requests.get(url)
-
-    commits = json.loads(reponse.text)
-
-    commit_count = 0
-
-    for commit in commits:
-        commit_count += 1
-
+if __name__=='__main__':
+    main()
     return repo_name, commit_count
 
 def gather_github_info(github_id):
