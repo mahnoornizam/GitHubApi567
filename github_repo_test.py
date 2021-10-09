@@ -1,31 +1,21 @@
-
-
-# Modules
-import requests
-import json
 import unittest
-
-# File Imports
-from githubrepo import gather_repos, gather_commits, gather_github_info
-
-class Testgithubrepo(unittest.TestCase):
-    """ This class contains all of the unit tests for the GitHub Aggregator """
-
-    def test_gather_repos(self):
-        self.assertEqual(gather_repos('richkempinski'), ['threads-of-life', 'hellogitworld', 'helloworld', 'csp', 'richkempinski.io', 'Mocks', 'Project1', 'try_nbdev', 'try_nbdev2'])
-        self.assertNotEqual(gather_repos('richkempinski'), ['hellogitworld', 'helloworld', 'csp', 'richkempinski.io', 'Mocks', 'Project1', 'try_nbdev', 'try_nbdev2'])
-
-
-    def test_gather_commits(self):
-        self.assertEqual(gather_commits('richkempinski', 'hellogitworld'), ('hellogitworld', 11))
-        self.assertNotEqual(gather_commits('richkempinski', 'hellogitworld'), ('hellogitworld', 13))
-
-
-    def test_gather_github_info(self):
-        self.assertEqual(gather_github_info('richkempinski'), [('threads-of-life', 9), ('hellogitworld', 6), ('helloworld', 30), ('csp', 16), ('richkempinski.io',3), ('Mocks', 11), ('Project1', 7), ('try_nbdev',9), ('try_nbdev2',11)])
-        self.assertNotEqual(gather_github_info('richkempinski'), [('hellogitworld', 6), ('helloworld', 30), ('csp', 16), ('richkempinski.io',3), ('Mocks', 11), ('Project1', 7), ('try_nbdev',9), ('try_nbdev2',11)])
-
+from unittest.mock import MagicMock,patch
+from hw04_zhianghu import *
+class Testget_repositories(unittest.TestCase):
+    @patch("hw04_zhianghu.get_repositories")
+    def testget_repositories(self,Mocktest):
+        list1 = ['Repo: csp Commits number: 2', 
+                 'Repo: hellogitworld Commits number: 30',
+                 'Repo: helloworld Commits number: 6',
+                 'Repo: Mocks Commits number: 10', 
+                 'Repo: Project1 Commits number: 2', 
+                 'Repo: richkempinski.github.io Commits number: 9',
+                 'Repo: threads-of-life Commits number: 1',
+                 'Repo: try_nbdev Commits number: 2',
+                 'Repo: try_nbdev2 Commits number: 5']
+        self.assertEqual('Repo: csp Commits number: 2', list1[0])
 
 if __name__ == '__main__':
-    print("Running Unit Tests...")
-    unittest.main(exit=False,verbosity=2)
+    print('tests begin')
+    unittest.main(exit=False, verbosity=2)
+
