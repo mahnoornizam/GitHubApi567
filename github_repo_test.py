@@ -2,7 +2,7 @@ import unittest
 from unittest.mock import MagicMock,patch
 from hw04_zhianghu import *
 class Testget_repositories(unittest.TestCase):
-    @patch("hw04_zhianghu.get_repositories")
+    @patch("githubrepo.get_repositories")
     def testget_repositories(self,Mocktest):
         list1 = ['Repo: csp Commits number: 2', 
                  'Repo: hellogitworld Commits number: 30',
